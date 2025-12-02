@@ -1,0 +1,17 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Yedek dosyalar
+*.bak
+*.tmp
+*.log
+
+# PHP
+vendor/
+composer.lock
