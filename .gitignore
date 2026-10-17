@@ -18,3 +18,5 @@ Thumbs.db
 # PHP
 vendor/
 composer.lock
+# Ortam değişkenleri
+.env

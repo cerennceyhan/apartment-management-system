@@ -1,116 +1,85 @@
-# 🏢 Apartment Management System
+# 🏢 Apartment Management System / Apartman Yönetim Sistemi
 
-**[Türkçe](#turkish) | [English](#english)**
+**[Türkçe](#türkçe) | [English](#english)**
+
+## English
+
+A web application for apartment residents and managers: dues tracking, income/expense records, role-based permissions, reports and charts. Plain PHP + MySQL, no framework.
+
+### Features
+
+- 💰 Dues management and resident payment history
+- 📊 Income / expense tracking with charts
+- 👥 Roles and fine-grained permission groups (admin, accountant, manager, resident)
+- 🏠 Sites, blocks, flats, owners and tenants
+- 🎫 Support requests from residents
+- 🔐 Hashed passwords, first-login password creation
+
+### Requirements
+
+PHP 7.4+ (with `pdo_mysql`) and MySQL 5.7+ / MariaDB.
+
+### Setup
+
+```bash
+# 1. create the database and import the schema + demo data
+mysql -u root -p -e "CREATE DATABASE apartment_management CHARACTER SET utf8mb4"
+mysql -u root -p apartment_management < database/apartment_management.sql
+
+# 2. configure the connection (defaults: localhost / root / empty password)
+cp .env.example .env     # edit DB_HOST, DB_NAME, DB_USER, DB_PASS
+
+# 3. run
+php -S localhost:8000 -t public
+```
+
+Open http://localhost:8000. With XAMPP/Apache, point the document root (or an alias) to the `public/` folder.
+
+**Demo login** (tab "Yönetici / Üye"): `admin` / `admin123` – change it before any real use.
+
+### Project layout
+
+```
+public/              # web root – the only folder exposed to the web
+├── index.php        # dashboard
+├── login.php, logout.php, create_password.php
+├── api.php          # JSON API (?endpoint=...)
+├── pages/           # one file per screen (siteler, bloklar, daireler, sakinler, aidatlar, ...)
+├── ajax/            # small endpoints called from the pages
+└── assets/          # css + js
+src/                 # application code (not web accessible)
+├── Database.php     # PDO connection from env settings
+├── env.php          # .env loader
+├── auth.php, permissions.php, functions.php
+├── chart.php        # reusable chart component
+└── views/sidebar.php
+config/database.php  # opens the global $db
+database/            # SQL schema + demo data
+tests/smoke_test.py  # logs in and requests every page/endpoint
+```
+
+### Testing
+
+```bash
+php -S 127.0.0.1:8000 -t public &
+python3 tests/smoke_test.py http://127.0.0.1:8000
+```
 
 ---
 
-<a name="turkish"></a>
-## 🇹🇷 Türkçe
+## Türkçe
 
-Apartman sakinleri ve yöneticileri için geliştirilmiş kapsamlı web tabanlı yönetim sistemi.
+Apartman sakinleri ve yöneticileri için web tabanlı yönetim sistemi: aidat takibi, gelir-gider kayıtları, rol/yetki yönetimi, raporlar ve grafikler. Çerçevesiz, düz PHP + MySQL.
 
-### 📝 Proje Hakkında
+### Kurulum
 
-Bu proje, apartman yönetimini kolaylaştırmak için geliştirilmiş bir web uygulamasıdır. Aidat takibi, gelir-gider yönetimi ve kullanıcı yetkilendirmesi gibi temel özellikleri içerir.
-
-### ✨ Özellikler
-
-- 💰 **Aidat Yönetimi:** Apartman sakinlerinin aidatlarını takip etme
-- 📊 **Gelir-Gider Takibi:** Apartman gelir ve giderlerinin detaylı kayıtları
-- 👥 **Kullanıcı Rolleri:** Apartman sakini, yönetici ve diğer yetki grupları
-- 🔐 **Güvenli Giriş:** Kullanıcı kimlik doğrulama sistemi (şifreler hash'li)
-- 📈 **Raporlama:** Gelir-gider raporları ve grafikler
-- 🏠 **Daire Yönetimi:** Daire sahipleri ve kiracı bilgilerinin yönetimi
-
-### 🚀 Kurulum
-
-#### 1. Gereksinimler
-
-- PHP 7.4 veya üzeri
-- MySQL 5.7 veya üzeri
-- Apache/Nginx web sunucusu
-- XAMPP, WAMP veya benzeri bir yerel sunucu
-
-#### 2. Veritabanı Kurulumu
-```sql
--- MySQL'de yeni bir veritabanı oluşturun
-CREATE DATABASE apartment_management;
-
--- SQL dosyasını içe aktarın
-mysql -u root -p apartment_management < apartment_management.sql
+```bash
+mysql -u root -p -e "CREATE DATABASE apartment_management CHARACTER SET utf8mb4"
+mysql -u root -p apartment_management < database/apartment_management.sql
+cp .env.example .env     # DB_HOST, DB_NAME, DB_USER, DB_PASS değerlerini düzenleyin
+php -S localhost:8000 -t public
 ```
 
-#### 3. Yapılandırma
+Tarayıcıda http://localhost:8000 adresini açın. XAMPP/Apache kullanıyorsanız belge kökünü `public/` klasörüne yönlendirin.
 
-`config/database.php` dosyasını açın ve veritabanı bilgilerinizi kontrol edin/güncelleyin:
-```php
-<?php
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: 'your_password');
-define('DB_NAME', getenv('DB_NAME') ?: 'apartment_management');
-?>
-```
-
-#### 4. Giriş Bilgileri
-
-**Demo Hesap:**
-- **Kullanıcı Adı:** `admin`
-- **Şifre:** `admin123`
-
-
----
-
-<a name="english"></a>
-## 🇬🇧 English
-
-Comprehensive web-based management system developed for apartment residents and managers.
-
-### 📝 About the Project
-
-This project is a web application developed to facilitate apartment management. It includes essential features such as dues tracking, income-expense management, and user authorization.
-
-### ✨ Features
-
-- 💰 **Dues Management:** Track apartment residents' dues
-- 📊 **Income-Expense Tracking:** Detailed records of apartment income and expenses
-- 👥 **User Roles:** Apartment resident, manager, and other authorization groups
-- 🔐 **Secure Login:** User authentication system (passwords are hashed)
-- 📈 **Reporting:** Income-expense reports and charts
-- 🏠 **Apartment Management:** Management of apartment owners and tenant information
-
-### 🚀 Installation
-
-#### 1. Requirements
-
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Apache/Nginx web server
-- XAMPP, WAMP, or similar local server
-
-#### 2. Database Setup
-```sql
--- Create a new database in MySQL
-CREATE DATABASE apartment_management;
-
--- Import the SQL file
-mysql -u root -p apartment_management < apartment_management.sql
-```
-
-#### 3. Configuration
-
-Open `config/database.php` file and check/update your database credentials:
-```php
-<?php
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: 'your_password');
-define('DB_NAME', getenv('DB_NAME') ?: 'apartment_management');
-?>
-```
-
-#### 4. Login Credentials
-
-**Demo Account:**
-- **Username:** `admin`
-- **Password:** `admin123`
+**Demo giriş:** `admin` / `admin123` (gerçek kullanımdan önce değiştirin). Dosya yapısı ve test komutları yukarıdaki İngilizce bölümdedir.
