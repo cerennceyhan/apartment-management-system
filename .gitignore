@@ -1,3 +1,6 @@
+# Ortam değişkenleri
+.env
+
 # IDE
 .vscode/
 .idea/

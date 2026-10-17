@@ -1,9 +1,10 @@
 <?php
 // config/database.php - Veritabanı bağlantı ayarları
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'apartment_management');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// Değerler ortam değişkenlerinden okunur; tanımlı değilse yerel geliştirme varsayılanları kullanılır.
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: 'apartment_management');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 
 // Veritabanı bağlantısı
 class Database {

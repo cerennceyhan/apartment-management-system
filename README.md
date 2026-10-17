@@ -45,10 +45,10 @@ mysql -u root -p apartment_management < apartment_management.sql
 `config/database.php` dosyasını açın ve veritabanı bilgilerinizi kontrol edin/güncelleyin:
 ```php
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', 'your_password');
-define('DB_NAME', 'apartment_management');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: 'your_password');
+define('DB_NAME', getenv('DB_NAME') ?: 'apartment_management');
 ?>
 ```
 
@@ -102,10 +102,10 @@ mysql -u root -p apartment_management < apartment_management.sql
 Open `config/database.php` file and check/update your database credentials:
 ```php
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', 'your_password');
-define('DB_NAME', 'apartment_management');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: 'your_password');
+define('DB_NAME', getenv('DB_NAME') ?: 'apartment_management');
 ?>
 ```
 

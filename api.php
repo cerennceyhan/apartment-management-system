@@ -12,11 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Veritabanı bağlantısı
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'apartment_management';
-    private $username = 'root';
-    private $password = '';
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     private $conn;
+
+    public function __construct() {
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->db_name = getenv('DB_NAME') ?: 'apartment_management';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
+    }
     
     public function getConnection() {
         $this->conn = null;
