@@ -1,0 +1,47 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-apartment_management}
+      DB_USER: ${DB_USER:-apartment}
+      DB_PASS: ${DB_PASS:-apartment}
+    volumes:
+      - ./public:/var/www/html/public
+      - ./src:/var/www/html/src
+      - ./config:/var/www/html/config
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: ${DB_NAME:-apartment_management}
+      MARIADB_USER: ${DB_USER:-apartment}
+      MARIADB_PASSWORD: ${DB_PASS:-apartment}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-root}
+    volumes:
+      - db_data:/var/lib/mysql
+      # imported automatically the first time the volume is created
+      - ./database/apartment_management.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    profiles: ["tools"]
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:

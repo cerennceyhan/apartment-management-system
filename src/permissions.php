@@ -196,4 +196,3 @@ function getNavigationItems() {
     
     return $items;
 }
-?>

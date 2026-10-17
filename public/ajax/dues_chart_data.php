@@ -63,4 +63,3 @@ try {
         'error' => 'Veri alınırken hata oluştu: ' . $e->getMessage()
     ]);
 }
-?>

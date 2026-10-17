@@ -363,4 +363,3 @@ function validateSession() {
     
     return true;
 }
-?>
